@@ -48,6 +48,10 @@ export const handler = async (req: Request) => {
 
   for (const pool of pools.data.pools) {
     console.log(pool);
+    if(BigInt(pool.liquidity) < BigInt(1000)){
+      console.log(`Skipping pool ${pool.id} with low liquidity`);
+      continue;
+    }
 
     const token0 = new Token(
       ChainId.TARAXA_TESTNET,
