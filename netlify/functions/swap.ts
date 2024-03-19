@@ -80,7 +80,7 @@ export const handler = async (req: Request) => {
       provider
     );
 
-    const quotedAmountOut = quoterContract.quoteExactInputSingle.staticCall(
+    const quotedAmountOut =  await quoterContract.quoteExactInputSingle.staticCall(
       token0,
       token1,
       fee,
