@@ -7,8 +7,8 @@ import {
 } from "@0xelod/sdk-core";
 import { Route, SwapQuoter } from "@0xelod/v3-sdk";
 import { JsonRpcProvider, AbiCoder } from "ethers";
-import { WriteConfig } from "./config.mjs";
-import { fromReadableAmount } from "./utils.mjs";
+import { WriteConfig } from "./config.js";
+import { fromReadableAmount } from "./utils.js";
 
 export async function getOutputQuote(
   route: Route<Currency, Currency>,

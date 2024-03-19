@@ -20,11 +20,11 @@ import {
   SwapRouter,
   Trade,
 } from "@0xelod/v3-sdk";
-import { getPoolInfo, getPools } from "./src/pools.graphql.mts";
-import { CurrentConfig, WriteConfig } from "./src/config.mts";
-import { fromReadableAmount } from "./src/utils.mts";
-import { getOutputQuote } from "./src/qouter.mts";
-import { getTokenTransferApproval } from "./src/approval.mts";
+import { getPoolInfo, getPools } from "./src/pools.graphql";
+import { CurrentConfig, WriteConfig } from "./src/config";
+import { fromReadableAmount } from "./src/utils";
+import { getOutputQuote } from "./src/qouter";
+import { getTokenTransferApproval } from "./src/approval";
 
 dotenv.config();
 

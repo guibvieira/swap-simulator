@@ -1,5 +1,5 @@
 import { CHAIN_TO_ADDRESSES_MAP, ChainId, Token } from "@0xelod/sdk-core";
-import { TransactionState, fromReadableAmount } from "./utils.mjs";
+import { TransactionState, fromReadableAmount } from "./utils.js";
 import {
   JsonRpcProvider,
   Wallet,
