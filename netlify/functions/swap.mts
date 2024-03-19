@@ -28,7 +28,7 @@ import { getTokenTransferApproval } from "./src/approval.mts";
 
 dotenv.config();
 
-const  handler  = async (req: Request) => {
+const handler = async (req: Request) => {
   const { next_run } = await req.json();
 
   console.log("Received event! Next invocation at:", next_run);
@@ -178,4 +178,5 @@ const  handler  = async (req: Request) => {
 export const config: Config = {
   schedule: "*/3 * * * *",
 };
+
 export default handler;
