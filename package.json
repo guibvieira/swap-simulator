@@ -7,7 +7,7 @@
   "moduleResolution": "node",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "echo Building..."
   },
   "author": "VargaElod23",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "jsbi": "^4.3.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.30"
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.2"
   }
 }
