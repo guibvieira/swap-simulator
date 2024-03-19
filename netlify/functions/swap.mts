@@ -9,8 +9,8 @@ import {
   Token,
   TradeType,
 } from "@0xelod/sdk-core";
-import IUniswapV3PoolABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
-import Quoter from "@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json";
+import IUniswapV3PoolABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json" with { type: "json" };
+import Quoter  from "@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json" with { type: "json" };
 import { JsonRpcProvider, Contract, Wallet, toBigInt } from "ethers";
 import {
   Pool,
