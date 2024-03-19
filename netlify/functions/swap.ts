@@ -76,9 +76,7 @@ export const handler = async (req: Request) => {
       provider
     );
 
-    const quotedAmountOut = await (quoterContract as any).callStatic[
-      "quoteExactInputSingle"
-    ](
+    const quotedAmountOut = quoterContract.quoteExactInputSingle.staticCall(
       token0,
       token1,
       fee,
