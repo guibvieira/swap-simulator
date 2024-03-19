@@ -29,9 +29,6 @@ import { getTokenTransferApproval } from "./src/approval";
 dotenv.config();
 
 export const handler = async (req: Request) => {
-  const { next_run } = await req.json();
-
-  console.log("Received event! Next invocation at:", next_run);
 
   const INFURA_URL = "https://rpc.testnet.taraxa.io";
 
