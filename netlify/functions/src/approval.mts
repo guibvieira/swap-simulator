@@ -1,5 +1,5 @@
 import { CHAIN_TO_ADDRESSES_MAP, ChainId, Token } from "@0xelod/sdk-core";
-import { TransactionState, fromReadableAmount } from "./utils.mts";
+import { TransactionState, fromReadableAmount } from "./utils.mjs";
 import {
   JsonRpcProvider,
   Wallet,
@@ -40,7 +40,9 @@ export async function getTokenTransferApproval(
       wallet.provider
     );
 
-    const transaction = await tokenContract.populateTransaction["approve"](
+    const transaction = await (tokenContract.populateTransaction as any)[
+      "approve"
+    ](
       CHAIN_TO_ADDRESSES_MAP[ChainId.TARAXA_TESTNET].swapRouter02Address,
       fromReadableAmount(amount, token.decimals).toString()
     );

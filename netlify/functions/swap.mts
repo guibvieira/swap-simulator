@@ -1,7 +1,6 @@
 import type { Config } from "@netlify/functions";
 
 import * as dotenv from "dotenv";
-import { getPoolInfo, getPools } from "../../src/pools.graphql.mts";
 import {
   CHAIN_TO_ADDRESSES_MAP,
   ChainId,
@@ -21,10 +20,11 @@ import {
   SwapRouter,
   Trade,
 } from "@0xelod/v3-sdk";
-import { fromReadableAmount } from "../../src/utils.mts";
-import { CurrentConfig, WriteConfig } from "../../src/config.mts";
-import { getOutputQuote } from "../../src/qouter.mts";
-import { getTokenTransferApproval } from "../../src/approval.mts";
+import { getPoolInfo, getPools } from "./src/pools.graphql.mts";
+import { CurrentConfig, WriteConfig } from "./src/config.mts";
+import { fromReadableAmount } from "./src/utils.mts";
+import { getOutputQuote } from "./src/qouter.mts";
+import { getTokenTransferApproval } from "./src/approval.mts";
 
 dotenv.config();
 
@@ -79,7 +79,7 @@ export default async (req: Request) => {
       provider
     );
 
-    const quotedAmountOut = await quoterContract.callStatic[
+    const quotedAmountOut = await (quoterContract as any).callStatic[
       "quoteExactInputSingle"
     ](
       token0,
@@ -139,6 +139,7 @@ export default async (req: Request) => {
       writeConfig.tokens.amountIn,
       wallet
     );
+    console.log("Token approval:", tokenApproval);
 
     const options: SwapOptions = {
       slippageTolerance: new Percent(500, 10_000), // 500 bips, or 5.0%

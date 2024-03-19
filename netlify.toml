@@ -1,2 +1,4 @@
 [functions."swap"]
 schedule = "*/3 * * * *"
+[functions]
+  node_bundler = "esbuild"
