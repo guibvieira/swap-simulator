@@ -1,13 +1,7 @@
 import { CHAIN_TO_ADDRESSES_MAP, ChainId, Token } from "@0xelod/sdk-core";
 import { TransactionState, fromReadableAmount } from "./utils.js";
-import {
-  JsonRpcProvider,
-  Wallet,
-  Contract,
-  TransactionRequest,
-  toBigInt,
-  TransactionReceipt,
-} from "ethers";
+import { Wallet, Contract } from "ethers";
+import { SWAP_ROUTER_3 } from "./config.js";
 
 export const ERC20_ABI = [
   // Read-Only Functions
@@ -18,6 +12,7 @@ export const ERC20_ABI = [
   // Authenticated Functions
   "function transfer(address to, uint amount) returns (bool)",
   "function approve(address _spender, uint256 _value) returns (bool)",
+  "function allowance(address _owner, address _spender) view returns (uint256)",
 
   // Events
   "event Transfer(address indexed from, address indexed to, uint amount)",
@@ -34,63 +29,46 @@ export async function getTokenTransferApproval(
   }
 
   try {
-    const tokenContract = new Contract(
-      token.address,
-      ERC20_ABI,
-      wallet.provider
-    );
+    const tokenContract = new Contract(token.address, ERC20_ABI, wallet);
 
-    const transaction = await (tokenContract.populateTransaction as any)[
-      "approve"
-    ](
-      CHAIN_TO_ADDRESSES_MAP[ChainId.TARAXA_TESTNET].swapRouter02Address,
+    console.log(
+      "Approving amount: ",
+      fromReadableAmount(amount, token.decimals).toString()
+    );
+    const transaction = await tokenContract.approve(
+      SWAP_ROUTER_3,
       fromReadableAmount(amount, token.decimals).toString()
     );
 
-    return sendTransaction(
-      {
-        ...transaction,
-      },
-      wallet
-    );
+    if (!transaction) {
+      return TransactionState.Failed;
+    }
+
+    return TransactionState.Sent;
   } catch (e) {
     console.error(e);
     return TransactionState.Failed;
   }
 }
 
-export async function sendTransaction(
-  transaction: TransactionRequest,
+export async function getAllowance(
+  token: Token,
+  spender: string,
   wallet: Wallet
-): Promise<TransactionState> {
-  if (transaction.value) {
-    transaction.value = toBigInt(transaction.value);
-  }
-  const txRes = await wallet.sendTransaction(transaction);
-
-  let receipt: TransactionReceipt | null = null;
-  const provider = wallet.provider;
-  if (!provider) {
-    return TransactionState.Failed;
+): Promise<bigint> {
+  if (!wallet) {
+    console.log("No Provider Found");
+    return BigInt(0);
   }
 
-  while (!receipt) {
-    try {
-      receipt = await provider.getTransactionReceipt(txRes.hash);
+  try {
+    const tokenContract = new Contract(token.address, ERC20_ABI, wallet);
 
-      if (receipt === null) {
-        continue;
-      }
-    } catch (e) {
-      console.log(`Receipt error:`, e);
-      break;
-    }
-  }
+    const allowance = await tokenContract.allowance(wallet.address, spender);
 
-  // Transaction was successful if status === 1
-  if (receipt) {
-    return TransactionState.Sent;
-  } else {
-    return TransactionState.Failed;
+    return BigInt(allowance);
+  } catch (e) {
+    console.error(e);
+    return BigInt(0);
   }
 }

@@ -2,7 +2,6 @@
   "name": "v3-mm",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "moduleResolution": "esnext",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,12 +11,11 @@
   "author": "VargaElod23",
   "license": "ISC",
   "dependencies": {
-    "@0xelod/sdk-core": "^4.2.1-beta",
+    "@0xelod/sdk-core": "^4.2.0",
     "@0xelod/v3-sdk": "^3.11.0",
     "@netlify/functions": "^2.6.0",
     "dotenv": "^16.4.5",
-    "ethers": "^6.11.1",
-    "jsbi": "^4.3.0"
+    "ethers": "^6.11.1"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",

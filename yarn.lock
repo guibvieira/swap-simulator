@@ -14,18 +14,6 @@
     tiny-invariant "^1.1.0"
     toformat "^2.0.0"
 
-"@0xelod/sdk-core@^4.2.1-beta":
-  version "4.2.1-beta"
-  resolved "https://registry.npmjs.org/@0xelod/sdk-core/-/sdk-core-4.2.1-beta.tgz#5b3df0f7031daab8bb5bda537682c9c4c0a01508"
-  integrity sha512-z75AiD+2CiZUdH+wcew2t3d/LrhIoMy4VGAUYLHGsr15chtJ9+DmCmMDLpFG5vzRHWFYwgmFP4T8/aT76/nmjg==
-  dependencies:
-    "@ethersproject/address" "^5.0.2"
-    big.js "^5.2.2"
-    decimal.js-light "^2.5.0"
-    jsbi "^3.1.4"
-    tiny-invariant "^1.1.0"
-    toformat "^2.0.0"
-
 "@0xelod/v3-sdk@^3.11.0":
   version "3.11.0"
   resolved "https://registry.npmjs.org/@0xelod/v3-sdk/-/v3-sdk-3.11.0.tgz#2ed6d20ecf8d126745e9a5f6464369ca6844b9cd"
@@ -536,11 +524,6 @@ jsbi@^3.1.4:
   version "3.2.5"
   resolved "https://registry.npmjs.org/jsbi/-/jsbi-3.2.5.tgz#b37bb90e0e5c2814c1c2a1bcd8c729888a2e37d6"
   integrity sha512-aBE4n43IPvjaddScbvWRA2YlTzKEynHzu7MqOyTipdHucf/VxS63ViCjxYRg86M8Rxwbt/GfzHl1kKERkt45fQ==
-
-jsbi@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.npmjs.org/jsbi/-/jsbi-4.3.0.tgz#b54ee074fb6fcbc00619559305c8f7e912b04741"
-  integrity sha512-SnZNcinB4RIcnEyZqFPdGPVgrg2AcnykiBy0sHVJQKHYeaLUvi3Exj+iaPpLnFVkDPZIV4U0yvgC9/R4uEAZ9g==
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"

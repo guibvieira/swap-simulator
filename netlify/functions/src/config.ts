@@ -75,3 +75,5 @@ export const currentPoolAddress = (config: Config) =>
     tokenB: config.tokens.out,
     fee: config.tokens.poolFee,
   });
+
+export const SWAP_ROUTER_3 = "0x762dA247D9F269b1689d4baaD587243eccF7910c";
