@@ -9,6 +9,7 @@ export default async (req: Request) => {
   const endpoint =
     "https://swap-simulator.netlify.app/.netlify/functions/swap-back-background";
 
+  console.log(`Fetched ${endpoint} at ${new Date().toISOString()}`);
   await fetch(endpoint, {
     method: "POST",
     body: JSON.stringify({
