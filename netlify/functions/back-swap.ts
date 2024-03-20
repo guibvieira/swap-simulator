@@ -9,7 +9,7 @@ export default async (req: Request) => {
   const endpoint =
     "https://swap-simulator.netlify.app/.netlify/functions/swap-back-background";
 
-  const response = await fetch(endpoint, {
+  await fetch(endpoint, {
     method: "POST",
     body: JSON.stringify({
       amount:
@@ -18,8 +18,6 @@ export default async (req: Request) => {
         100,
     }),
   });
-  const data = await response.json();
-  console.log(data);
 };
 
 export const config: Config = {
