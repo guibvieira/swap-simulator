@@ -21,10 +21,11 @@ import { getAllowance, getTokenTransferApproval } from "./src/approval";
 dotenv.config();
 
 export const handler = async (req: Request) => {
-  const amountOriginal = Number(process.env.SWAP_AMOUNT || 0);
-  const swapRatio = Number(process.env.SWAP_RATIO || 60);
+  const amountOriginal = Number(process.env.SWAP_AMOUNT || 1000);
+  const swapRatio = Number(process.env.SWAP_RATIO || 80);
 
   const amount = amountOriginal * swapRatio / 10;
+  console.log("🚀 ~ handler ~ amount:", amount)
   const INFURA_URL = "https://rpc.testnet.taraxa.io";
   const TEST_WALLET_PRIVATE_KEY = process.env.TEST_WALLET_PRIVATE_KEY || "";
   const UNISWAP_GRAPH_URL = "https://indexer.lswap.app/subgraphs/name/lara-staking/uniswap-v3?source=uniswap";
@@ -33,7 +34,7 @@ export const handler = async (req: Request) => {
   console.log(`Got ${pools.data.pools.length} pools from the graph!`);
   let randomPoolIndex = Math.floor(Math.random() * pools.data.pools.length);
 
-  let pool = pools.data.pools[randomPoolIndex];
+  let pool = pools.data.pools[2];
   console.log(`Selected pool: ${pool.id} with liquidity: ${pool.liquidity}. Token0: ${pool.token0.symbol} Token1: ${pool.token1.symbol}`);
 
   let skip = false;

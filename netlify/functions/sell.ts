@@ -21,12 +21,23 @@ import { getAllowance, getTokenTransferApproval } from "./src/approval";
 dotenv.config();
 
 export const handler = async (req: Request) => {
-  const amountOriginal = Number(process.env.SWAP_AMOUNT || 0);
+  const amountOriginal = Number(process.env.SWAP_AMOUNT || 1000);
   const swapRatio = Number(process.env.SWAP_RATIO || 60);
 
+  // let randomMultiplierBetweenOneAndRatio = Math.floor(Math.random() * (swapRatio / 10));
+  // const amount = amountOriginal * randomMultiplierBetweenOneAndRatio > 0 ? randomMultiplierBetweenOneAndRatio : 1;
 
-  let randomMultiplierBetweenOneAndRatio = Math.floor(Math.random() * (swapRatio / 10));
-  const amount = amountOriginal * randomMultiplierBetweenOneAndRatio > 0 ? randomMultiplierBetweenOneAndRatio : 1;
+  // Calculate the inverse of the swapRatio to reflect the opposite intention
+  const inverseRatio = 100 - swapRatio;
+  // Choose a random percentage up to the inverseRatio
+  let randomPercentage = Math.random() * inverseRatio;
+  // Calculate the final amount as a percentage of the original amount, 
+  // ensuring it does not exceed the percentage defined by the inverseRatio
+  const amount = amountOriginal * (randomPercentage / 100);
+  // Ensure the final amount is at least 1 if the original amount is not zero, 
+  // and does not exceed the calculated percentage of the original amount
+  const finalAmount = amountOriginal > 0 ? Math.max(1, Math.min(amount, amountOriginal * (inverseRatio / 100))) : 0;
+  console.log(`Final amount to sell: ${finalAmount}`);
 
   const INFURA_URL = "https://rpc.testnet.taraxa.io";
 
@@ -40,7 +51,7 @@ export const handler = async (req: Request) => {
 
   console.log(`Got ${pools.data.pools.length} pools from the graph!`);
 
-  let randomPoolIndex = Math.floor(Math.random() * pools.data.pools.length);
+  let randomPoolIndex =  2;// Math.floor(Math.random() * pools.data.pools.length);
 
   let pool = pools.data.pools[randomPoolIndex];
   console.log(`Selected pool: ${pool.id} with liquidity: ${pool.liquidity}. Token0: ${pool.token0.symbol} Token1: ${pool.token1.symbol}`);
