@@ -48,6 +48,37 @@ export const getPools = async (graphUrl: string): Promise<PoolResponse> => {
   return response.json();
 };
 
+export const getPool = async (graphUrl: string, poolId: string): Promise<PoolResponse> => {
+  // Adjust the poolsQuery to include a filter for the poolId
+  const poolQuery = `
+  {
+      pools(where: {id: "${poolId}"}) {
+          id
+          token0 {
+              id
+              symbol
+          }
+          token1 {
+              id
+              symbol
+          }
+          feeTier
+          liquidity
+      }
+  }
+  `;
+
+  const response = await fetch(graphUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query: poolQuery }),
+  });
+
+  return response.json();
+};
+
 export async function getPoolInfo(poolContract: Contract) {
   const [fee, liquidity, slot0] = await Promise.all([
     poolContract.fee(),

@@ -1,7 +1,3 @@
-[functions."swap"]
-schedule = "*/3 * * * *"
-[functions."back-swap"]
-schedule = "*/4 * * * *"
 [functions."sell"]
 schedule = "*/10 * * * *"
 [functions."large-buy"]

@@ -12,7 +12,7 @@ import { JsonRpcProvider, Contract, Wallet } from "ethers";
 import {
   SwapOptions,
 } from "@0xelod/v3-sdk";
-import { getPools } from "./src/pools.graphql";
+import { getPool, getPools } from "./src/pools.graphql";
 import { CurrentConfig, SWAP_ROUTER_3, WriteConfig } from "./src/config";
 import { QuoteExactOutputSingleParams, QuoteExactInputSingleParams, fromReadableAmount, TransactionState, ExactInputSingleParams } from "./src/utils";
 import JSBI from "jsbi";
@@ -30,24 +30,24 @@ export const handler = async (req: Request) => {
   const TEST_WALLET_PRIVATE_KEY = process.env.TEST_WALLET_PRIVATE_KEY || "";
   const UNISWAP_GRAPH_URL = "https://indexer.lswap.app/subgraphs/name/lara-staking/uniswap-v3?source=uniswap";
   const wallet = new Wallet(TEST_WALLET_PRIVATE_KEY, new JsonRpcProvider(INFURA_URL));
-  const pools = await getPools(UNISWAP_GRAPH_URL);
-  console.log(`Got ${pools.data.pools.length} pools from the graph!`);
-  let randomPoolIndex = Math.floor(Math.random() * pools.data.pools.length);
-
-  let pool = pools.data.pools[2];
+  const poolData = await getPool(UNISWAP_GRAPH_URL, "0x0a66473ff369d43f1c63832f7bb2fd887ed16844");
+  // console.log(`Got ${pools.data.pools.length} pools from the graph!`);
+  // let randomPoolIndex = 2//Math.floor(Math.random() * pools.data.pools.length);
+  const pool = poolData.data.pools[0];
+  // let pool = pools.data.pools[2];
   console.log(`Selected pool: ${pool.id} with liquidity: ${pool.liquidity}. Token0: ${pool.token0.symbol} Token1: ${pool.token1.symbol}`);
 
-  let skip = false;
-  while(!skip){
-  if(BigInt(pool.liquidity) < BigInt(1000)){
-    console.log(`Skipping pool ${pool.id} with low liquidity`);
-    randomPoolIndex = Math.floor(Math.random() * pools.data.pools.length);
-    pool = pools.data.pools[randomPoolIndex];
-  }
-  else{
-    skip = true;
-  }
-  }
+  // let skip = false;
+  // while(!skip){
+  // if(BigInt(pool.liquidity) < BigInt(1000)){
+  //   console.log(`Skipping pool ${pool.id} with low liquidity`);
+  //   randomPoolIndex = Math.floor(Math.random() * pools.data.pools.length);
+  //   pool = pools.data.pools[randomPoolIndex];
+  // }
+  // else{
+  //   skip = true;
+  // }
+  // }
   const token0 = new Token(
     ChainId.TARAXA_TESTNET,
     pool.token0.id,
