@@ -21,22 +21,16 @@ import { getAllowance, getTokenTransferApproval } from "./src/approval";
 dotenv.config();
 
 export const handler = async (req: Request) => {
-  const amountOriginal = Number(process.env.SWAP_AMOUNT || 1000);
-  const swapRatio = Number(process.env.SWAP_RATIO || 60);
-
-  // let randomMultiplierBetweenOneAndRatio = Math.floor(Math.random() * (swapRatio / 10));
-  // const amount = amountOriginal * randomMultiplierBetweenOneAndRatio > 0 ? randomMultiplierBetweenOneAndRatio : 1;
+  const amountOriginal = 1000;//Number(process.env.SWAP_AMOUNT || 1000);
+  console.log("🚀 ~ handler ~ amountOriginal:", amountOriginal)
+  const swapRatio = 60;//Number(process.env.SWAP_RATIO || 60);
+  console.log("🚀 ~ handler ~ swapRatio:", swapRatio)
 
   // Calculate the inverse of the swapRatio to reflect the opposite intention
   const inverseRatio = 100 - swapRatio;
-  console.log("🚀 ~ handler ~ inverseRatio:", inverseRatio)
-  // Choose a random percentage up to the inverseRatio
   let randomPercentage = Math.random() * inverseRatio;
-  console.log("🚀 ~ handler ~ randomPercentage:", randomPercentage)
-  // Calculate the final amount as a percentage of the original amount, 
-  // ensuring it does not exceed the percentage defined by the inverseRatio
   const amount = amountOriginal * (randomPercentage / 100);
-  console.log("🚀 ~ handler ~ amount:", amount)
+
   // Ensure the final amount is at least 1 if the original amount is not zero, 
   // and does not exceed the calculated percentage of the original amount
   const finalAmount = amountOriginal > 0 ? Math.max(1, Math.min(amount, amountOriginal * (inverseRatio / 100))) : 0;
@@ -50,10 +44,12 @@ export const handler = async (req: Request) => {
 
   const wallet = new Wallet(TEST_WALLET_PRIVATE_KEY, new JsonRpcProvider(INFURA_URL));
 
-  const poolData = await getPool(UNISWAP_GRAPH_URL, "0x0a66473ff369d43f1c63832f7bb2fd887ed16844");
+  const poolData = await getPool(UNISWAP_GRAPH_URL, "0x6f6e59d10570ef8491fd9b5fe804c61fbc285ca6");
+  console.log("🚀 ~ handler ~ poolData:", poolData)
   // console.log(`Got ${pools.data.pools.length} pools from the graph!`);
   // let randomPoolIndex = 2//Math.floor(Math.random() * pools.data.pools.length);
   const pool = poolData.data.pools[0];
+  console.log("🚀 ~ handler ~ pool:", pool)
   // let pool = pools.data.pools[2];
   console.log(`Selected pool: ${pool.id} with liquidity: ${pool.liquidity}. Token0: ${pool.token0.symbol} Token1: ${pool.token1.symbol}`);
 
