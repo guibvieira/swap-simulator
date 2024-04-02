@@ -21,9 +21,9 @@ import { getAllowance, getTokenTransferApproval } from "./src/approval";
 dotenv.config();
 
 export const handler = async (req: Request) => {
-  const amountOriginal = 1000;//Number(process.env.SWAP_AMOUNT || 1000);
+  const amountOriginal = Number(process.env.SWAP_AMOUNT || 1000);
   console.log("🚀 ~ handler ~ amountOriginal:", amountOriginal)
-  const swapRatio = 60;//Number(process.env.SWAP_RATIO || 60);
+  const swapRatio = Number(process.env.SWAP_RATIO || 60);
   console.log("🚀 ~ handler ~ swapRatio:", swapRatio)
 
   // Calculate the inverse of the swapRatio to reflect the opposite intention
