@@ -30,7 +30,7 @@ export const handler = async (req: Request) => {
   const TEST_WALLET_PRIVATE_KEY = process.env.TEST_WALLET_PRIVATE_KEY || "";
   const UNISWAP_GRAPH_URL = "https://indexer.lswap.app/subgraphs/name/lara-staking/uniswap-v3?source=uniswap";
   const wallet = new Wallet(TEST_WALLET_PRIVATE_KEY, new JsonRpcProvider(INFURA_URL));
-  const poolData = await getPool(UNISWAP_GRAPH_URL, "0x6f6e59d10570ef8491fd9b5fe804c61fbc285ca6");
+  const poolData = await getPool(UNISWAP_GRAPH_URL, "0x47048e15f52a5e8b0e71d955f48bed37d5eca137");
   // console.log(`Got ${pools.data.pools.length} pools from the graph!`);
   // let randomPoolIndex = 2//Math.floor(Math.random() * pools.data.pools.length);
   const pool = poolData.data.pools[0];

@@ -29,12 +29,12 @@ export const handler = async (req: Request) => {
   // Calculate the inverse of the swapRatio to reflect the opposite intention
   const inverseRatio = 100 - swapRatio;
   let randomPercentage = Math.random() * inverseRatio;
-  const amount = amountOriginal * (randomPercentage / 100);
+  const amountRandom = amountOriginal * (randomPercentage / 100);
 
   // Ensure the final amount is at least 1 if the original amount is not zero, 
   // and does not exceed the calculated percentage of the original amount
-  const finalAmount = amountOriginal > 0 ? Math.max(1, Math.min(amount, amountOriginal * (inverseRatio / 100))) : 0;
-  console.log(`Final amount to sell: ${finalAmount}`);
+  const amount = amountOriginal > 0 ? Math.max(1, Math.min(amountRandom, amountOriginal * (inverseRatio / 100))) : 0;
+  console.log(`Final amount to sell: ${amount}`);
 
   const INFURA_URL = "https://rpc.testnet.taraxa.io";
 
@@ -44,7 +44,7 @@ export const handler = async (req: Request) => {
 
   const wallet = new Wallet(TEST_WALLET_PRIVATE_KEY, new JsonRpcProvider(INFURA_URL));
 
-  const poolData = await getPool(UNISWAP_GRAPH_URL, "0x6f6e59d10570ef8491fd9b5fe804c61fbc285ca6");
+  const poolData = await getPool(UNISWAP_GRAPH_URL, "0x47048e15f52a5e8b0e71d955f48bed37d5eca137");
   console.log("🚀 ~ handler ~ poolData:", poolData)
   // console.log(`Got ${pools.data.pools.length} pools from the graph!`);
   // let randomPoolIndex = 2//Math.floor(Math.random() * pools.data.pools.length);
@@ -121,6 +121,7 @@ export const handler = async (req: Request) => {
   const quotedAmountOut: QuoteExactOutputSingleParams =  await quoterContract.quoteExactInputSingle.staticCall(
     exactInputs
   );
+  console.log("🚀 ~ handler ~ quotedAmountOut:", quotedAmountOut)
 
   console.log("Quoted amount out:", quotedAmountOut.amountOut.toString());
 
