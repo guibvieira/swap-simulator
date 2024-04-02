@@ -24,7 +24,9 @@ export const handler = async (req: Request) => {
   const amountOriginal = Number(process.env.SWAP_AMOUNT || 1000);
   const swapRatio = Number(process.env.SWAP_RATIO || 80);
 
-  const amount = amountOriginal * swapRatio / 10;
+  const randomPercentage = Math.random() * swapRatio;
+  console.log("🚀 ~ handler ~ randomPercentage:", randomPercentage)
+  const amount = amountOriginal * (randomPercentage / 100);
   console.log("🚀 ~ handler ~ amount:", amount)
   const INFURA_URL = "https://rpc.testnet.taraxa.io";
   const TEST_WALLET_PRIVATE_KEY = process.env.TEST_WALLET_PRIVATE_KEY || "";
@@ -54,6 +56,12 @@ export const handler = async (req: Request) => {
     pool.token1.symbol,
     true,
   );
+
+  console.log("=====================================");
+  console.log(`Swapping ${amount} ${token0.symbol} for ${token1.symbol}`);
+  console.log("=====================================");
+
+  
   const provider = new JsonRpcProvider("https://rpc.testnet.taraxa.io");
   const poolContract = new Contract(pool.id, IUniswapV3PoolABI.abi, provider);
   const fee = await poolContract.fee();
