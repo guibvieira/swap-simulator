@@ -21,13 +21,16 @@ import { getAllowance, getTokenTransferApproval } from "./src/approval";
 dotenv.config();
 
 export const handler = async (req: Request) => {
+  const tokenDecimals = 6;
   const amountOriginal = Number(process.env.SWAP_AMOUNT || 1000);
   const swapRatio = Number(process.env.SWAP_RATIO || 80);
 
   const randomPercentage = Math.random() * swapRatio;
   console.log("🚀 ~ handler ~ randomPercentage:", randomPercentage)
-  const amount = amountOriginal * (randomPercentage / 100);
-  console.log("🚀 ~ handler ~ amount:", amount)
+  const unroundedAmount = amountOriginal * (randomPercentage / 100);
+  const amount = parseFloat(unroundedAmount.toFixed(tokenDecimals));
+  console.log("🚀 ~ handler ~ amount:", amount);
+
   const INFURA_URL = "https://rpc.testnet.taraxa.io";
   const TEST_WALLET_PRIVATE_KEY = process.env.TEST_WALLET_PRIVATE_KEY || "";
   const UNISWAP_GRAPH_URL = "https://indexer.lswap.app/subgraphs/name/lara-staking/uniswap-v3?source=uniswap";
